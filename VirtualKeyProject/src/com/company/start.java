@@ -1,13 +1,12 @@
 package com.company;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.Scanner;
 
 public class start {
     public static void menu() {
-        File ob = new File("KeyFolder");
-        ob.mkdir();
-        File array[] = ob.listFiles();
+
 
         Scanner scan = new Scanner(System.in);
         System.out.println("Main menu:");
@@ -16,6 +15,9 @@ public class start {
         System.out.println("Press 3 to exit the program");
         boolean flag = true;
         while (flag) {
+            File ob = new File("KeyFolder");
+            ob.mkdir();
+            File array[] = ob.listFiles();
             int switchValue1 = scan.nextInt();
             switch (switchValue1) {
                 case 1:
@@ -27,11 +29,12 @@ public class start {
                     System.out.println("File editing menu: ");
                     System.out.println("Press 1 to ADD file ");
                     System.out.println("Press 2 to DELETE a file ");
-                    System.out.println("Press 2 to SEARCH for a file ");
+                    System.out.println("Press 3 to SEARCH for a file ");
                     System.out.println("Press 4 to return to the main menu ");
                     System.out.println("Press 5 to exit the program");
                     boolean flag2 = true;
                     while (flag2) {
+                        File array2[];
                         int switchValue2 = scan.nextInt();
                         Scanner scan2 = new Scanner(System.in);
                         switch (switchValue2) {
@@ -40,15 +43,21 @@ public class start {
                                 String newName = scan2.nextLine();
                                 File folder = new File("KeyFolder\\"+newName);
                                 folder.mkdirs();
-                                System.out.println("File added, press 1 to add another");
-
+                                System.out.println("Press 0 to see menu options");
                                 break;
                             case 2:
                                 System.out.println("Please enter the name of the file you want to delete: ");
                                 String name = scan2.nextLine();
                                 File delete = new File("KeyFolder\\"+name);
-                                delete.delete();
-
+                                for (int i = 0; i < array.length; i++) {
+                                    if (array[i].getName().startsWith(name)) {
+                                        delete.delete();
+                                    }
+                                    else {
+                                        System.out.println("File not found");
+                                    }
+                                }
+                                System.out.println("Press 0 to see menu options");
                                 break;
                             case 3:
                                 System.out.println("Please enter the name of the file: ");
@@ -57,7 +66,11 @@ public class start {
                                     if (array[i].getName().startsWith(name2)) {
                                         System.out.println(array[i]);
                                     }
+                                    else {
+                                        System.out.println("File not found");
+                                    }
                                 }
+                                System.out.println("Press 0 to see menu options");
                                 break;
                             case 4:
                                 System.out.println("Returning to main menu");
@@ -71,6 +84,14 @@ public class start {
                                 System.out.println("Exiting program");
                                 flag = false;
                                 flag2 = false;
+                                break;
+                            case 6: case 0:
+                                System.out.println("File editing menu: ");
+                                System.out.println("Press 1 to ADD file ");
+                                System.out.println("Press 2 to DELETE a file ");
+                                System.out.println("Press 2 to SEARCH for a file ");
+                                System.out.println("Press 4 to return to the main menu ");
+                                System.out.println("Press 5 to exit the program");
                                 break;
                             default:
                                 System.out.println("Please select a valid option");
